@@ -5,6 +5,8 @@ import cn from "classnames";
 import styles from "./Layout.module.scss";
 import Header from "./Header";
 import Footer from "./Footer";
+import Banner from "./Homepage/Banner";
+import { useRouter } from "next/router";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,6 +25,8 @@ const Layout: FC<ILayout> = ({
   children,
   className,
 }) => {
+  const router = useRouter();
+
   return (
     <div className={cn(className, inter.className)}>
       <Head>
@@ -41,6 +45,7 @@ const Layout: FC<ILayout> = ({
         />
       </Head>
       <Header />
+      {router.pathname === "/" && <Banner />}
       <div className={styles.container}>{children}</div>
       <Footer />
     </div>
