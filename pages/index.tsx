@@ -15,12 +15,14 @@ const Home: FC<{ fests: Fest[] }> = ({ fests }) => {
 export default Home;
 
 export const getStaticProps = async () => {
-  const res = await fetch(`${API_URL}/api/fests`);
+  const res = await fetch(
+    `${API_URL}/api/fests?populate=deep&sort=date:desc&pagination[limit]=3`
+  );
   const fests = await res.json();
 
   return {
     props: {
-      fests: fests.slice(0, 3),
+      fests: fests.data,
       revalidate: 60,
     },
   };

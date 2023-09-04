@@ -1,4 +1,4 @@
-import FestMain from "@/components/FestMain";
+import FestDetailsMain from "@/components/FestDetailsMain";
 import Layout from "@/components/Layout";
 import { API_URL } from "@/config";
 import { Fest } from "@/types";
@@ -6,21 +6,23 @@ import { GetStaticPaths, GetStaticProps } from "next";
 import { ParsedUrlQuery } from "querystring";
 import { FC } from "react";
 
-const FestPage: FC<{ fest: Fest }> = ({ fest }) => {
+const FestDetailsPage: FC<{ fest: Fest }> = ({ fest }) => {
   return (
     <Layout title="Fest page">
-      <FestMain fest={fest} />
+      <FestDetailsMain fest={fest} />
     </Layout>
   );
 };
 
-export default FestPage;
+export default FestDetailsPage;
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const res = await fetch(`${API_URL}/api/fests`);
-  const fests = (await res.json()) as Fest[];
+  const fests = (await res.json()) as { data: Fest[] };
 
-  const paths = fests.map((e) => ({ params: { slug: e.slug } }));
+  const paths = fests.data.map((e) => ({
+    params: { slug: e.attributes.slug },
+  }));
 
   return {
     paths,
@@ -34,12 +36,14 @@ interface Params extends ParsedUrlQuery {
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const { slug } = context.params as Params;
-  const res = await fetch(`${API_URL}/api/fests/${slug}`);
+  const res = await fetch(
+    `${API_URL}/api/fests?populate=deep&filters[slug][$eq]=${slug}`
+  );
   const fests = await res.json();
 
   return {
     props: {
-      fest: fests[0],
+      fest: fests.data[0],
       revalidate: 60,
     },
   };

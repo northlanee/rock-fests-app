@@ -6,6 +6,19 @@ import { FaPencilAlt, FaTimes } from "react-icons/fa";
 import styles from "./FestMain.module.scss";
 
 const FestMain: FC<{ fest: Fest }> = ({ fest }) => {
+  const {
+    attributes: {
+      name,
+      image,
+      date,
+      time,
+      performers,
+      description,
+      venue,
+      address,
+    },
+  } = fest;
+
   const deleteFest = () => {
     console.log("delete");
   };
@@ -22,21 +35,26 @@ const FestMain: FC<{ fest: Fest }> = ({ fest }) => {
       </div>
 
       <span>
-        {fest.date} at {fest.time}
+        {new Date(date).toLocaleDateString("en-UK")} at {time}
       </span>
-      <h1>{fest.name}</h1>
-      {fest.image && (
+      <h1>{name}</h1>
+      {image.data.id && (
         <div className={styles.image}>
-          <Image src={fest.image} alt={fest.name} width={960} height={600} />
+          <Image
+            src={image.data.attributes.url}
+            alt={name}
+            width={960}
+            height={600}
+          />
         </div>
       )}
 
       <h3>Performers:</h3>
-      <p>{fest.performers}</p>
+      <p>{performers}</p>
       <h3>Description:</h3>
-      <p>{fest.description}</p>
-      <h3>Venue: {fest.venue}</h3>
-      <p>{fest.address}</p>
+      <p>{description}</p>
+      <h3>Venue: {venue}</h3>
+      <p>{address}</p>
 
       <Link href="/fests" className={styles.back}>
         {"<"} Go Back

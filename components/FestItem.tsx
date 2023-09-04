@@ -5,12 +5,16 @@ import Image from "next/image";
 import styles from "./FestItem.module.scss";
 
 const FestItem: FC<{ fest: Fest }> = ({ fest }) => {
+  const {
+    attributes: { name, image, date, time, slug },
+  } = fest;
+
   return (
     <div className={styles.event}>
       <div className={styles.img}>
         <Image
-          src={fest.image || "/images/event-default.png"}
-          alt={fest.name}
+          src={image.data.attributes.url || "/images/event-default.png"}
+          alt={name}
           width={170}
           height={100}
         />
@@ -18,13 +22,13 @@ const FestItem: FC<{ fest: Fest }> = ({ fest }) => {
 
       <div className={styles.info}>
         <span>
-          {fest.date} at {fest.time}
+          {new Date(date).toLocaleDateString("en-UK")} at {time}
         </span>
-        <h3>{fest.name}</h3>
+        <h3>{name}</h3>
       </div>
 
       <div className={styles.link}>
-        <Link href={`/fests/${fest.slug}`} className="btn">
+        <Link href={`/fests/${slug}`} className="btn">
           Details
         </Link>
       </div>

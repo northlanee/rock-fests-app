@@ -1,5 +1,6 @@
 import Link from "next/link";
 import styles from "./Header.module.scss";
+import Search from "./Search/Search";
 
 const Header = () => {
   return (
@@ -7,6 +8,8 @@ const Header = () => {
       <div className={styles.logo}>
         <Link href="/">Rock Fests</Link>
       </div>
+
+      <Search />
 
       <nav>
         <ul>
