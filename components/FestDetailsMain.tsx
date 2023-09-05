@@ -3,9 +3,13 @@ import { FC } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { FaPencilAlt, FaTimes } from "react-icons/fa";
-import styles from "./FestMain.module.scss";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import styles from "./FestDetailsMain.module.scss";
+import { API_URL } from "@/config";
+import { useRouter } from "next/router";
 
-const FestMain: FC<{ fest: Fest }> = ({ fest }) => {
+const FestDetailsMain: FC<{ fest: Fest }> = ({ fest }) => {
   const {
     attributes: {
       name,
@@ -19,8 +23,22 @@ const FestMain: FC<{ fest: Fest }> = ({ fest }) => {
     },
   } = fest;
 
-  const deleteFest = () => {
-    console.log("delete");
+  const router = useRouter();
+
+  const deleteFest = async (fest: Fest) => {
+    if (confirm("Are you sure?")) {
+      const res = await fetch(`${API_URL}/api/fests/${fest.id}`, {
+        method: "DELETE",
+      });
+
+      const festRes = await res.json();
+
+      if (!festRes?.data) {
+        toast.error("Something went wrong");
+      } else {
+        router.push("/fests");
+      }
+    }
   };
 
   return (
@@ -29,7 +47,7 @@ const FestMain: FC<{ fest: Fest }> = ({ fest }) => {
         <Link href={`/fests/edit/${fest.id}`}>
           <FaPencilAlt /> Edit Fest
         </Link>
-        <a href="#" onClick={deleteFest} className={styles.delete}>
+        <a href="#" onClick={() => deleteFest(fest)} className={styles.delete}>
           <FaTimes /> Delete Fest
         </a>
       </div>
@@ -38,7 +56,8 @@ const FestMain: FC<{ fest: Fest }> = ({ fest }) => {
         {new Date(date).toLocaleDateString("en-UK")} at {time}
       </span>
       <h1>{name}</h1>
-      {image.data.id && (
+      <ToastContainer />
+      {image?.data?.id && (
         <div className={styles.image}>
           <Image
             src={image.data.attributes.url}
@@ -63,4 +82,4 @@ const FestMain: FC<{ fest: Fest }> = ({ fest }) => {
   );
 };
 
-export default FestMain;
+export default FestDetailsMain;

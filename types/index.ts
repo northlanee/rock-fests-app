@@ -31,9 +31,23 @@ export interface Fest {
         attributes: {
           name: string;
           url: string;
+          formats: {
+            thumbnail: {
+              url: string;
+            };
+          };
         };
       };
     };
+  };
+}
+
+export interface Meta {
+  pagination: {
+    page: number;
+    pageSize: number;
+    pageCount: number;
+    total: number;
   };
 }
 

@@ -31,7 +31,7 @@ export const getServerSideProps: GetServerSideProps = async ({
   });
 
   const res = await fetch(
-    `${API_URL}/api/fests?populate=deep&sort=date:desc&${query}`
+    `${API_URL}/api/fests?populate=deep&sort=date:asc&${query}`
   );
   const fests = await res.json();
 

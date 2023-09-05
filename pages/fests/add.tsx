@@ -1,7 +1,12 @@
+import AddFestMain from "@/components/AddFestMain";
 import Layout from "@/components/Layout";
 
-const AddEventPage = () => {
-  return <Layout title="Add event">Add event</Layout>;
+const AddFestPage = () => {
+  return (
+    <Layout title="Add fest">
+      <AddFestMain />
+    </Layout>
+  );
 };
 
-export default AddEventPage;
+export default AddFestPage;

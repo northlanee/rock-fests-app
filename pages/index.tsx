@@ -16,7 +16,7 @@ export default Home;
 
 export const getStaticProps = async () => {
   const res = await fetch(
-    `${API_URL}/api/fests?populate=deep&sort=date:desc&pagination[limit]=3`
+    `${API_URL}/api/fests?populate=deep&sort=date:asc&pagination[limit]=3`
   );
   const fests = await res.json();
 

@@ -11,14 +11,16 @@ const FestItem: FC<{ fest: Fest }> = ({ fest }) => {
 
   return (
     <div className={styles.event}>
-      <div className={styles.img}>
-        <Image
-          src={image.data.attributes.url || "/images/event-default.png"}
-          alt={name}
-          width={170}
-          height={100}
-        />
-      </div>
+      {image?.data?.id && (
+        <div className={styles.img}>
+          <Image
+            src={image.data.attributes.url || "/images/event-default.png"}
+            alt={name}
+            width={170}
+            height={100}
+          />
+        </div>
+      )}
 
       <div className={styles.info}>
         <span>

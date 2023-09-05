@@ -6,11 +6,9 @@ import { GetStaticPaths, GetStaticProps } from "next";
 import { ParsedUrlQuery } from "querystring";
 import { FC } from "react";
 
-const FestDetailsPage: FC<{ fest: Fest }> = ({ fest }) => {
+const FestDetailsPage: FC<{ fest?: Fest }> = ({ fest }) => {
   return (
-    <Layout title="Fest page">
-      <FestDetailsMain fest={fest} />
-    </Layout>
+    <Layout title="Fest page">{fest && <FestDetailsMain fest={fest} />}</Layout>
   );
 };
 
@@ -36,10 +34,17 @@ interface Params extends ParsedUrlQuery {
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const { slug } = context.params as Params;
+
   const res = await fetch(
     `${API_URL}/api/fests?populate=deep&filters[slug][$eq]=${slug}`
   );
   const fests = await res.json();
+
+  if (!fests?.data[0]) {
+    return {
+      notFound: true,
+    };
+  }
 
   return {
     props: {
