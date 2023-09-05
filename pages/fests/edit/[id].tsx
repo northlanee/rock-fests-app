@@ -18,11 +18,16 @@ interface Params extends ParsedUrlQuery {
   id: string;
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+export const getServerSideProps: GetServerSideProps = async ({
+  params,
+  req,
+}) => {
   const { id } = params as Params;
 
   const res = await fetch(`${API_URL}/api/fests/${id}?populate=deep`);
   const resData = await res.json();
+
+  console.log(req.headers.cookie);
 
   if (!resData?.data) {
     return {
