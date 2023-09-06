@@ -19,8 +19,6 @@ export default async function handler(
 
     const data = await strapiRes.json();
 
-    console.log(data.jwt);
-
     if (strapiRes.ok) {
       res.setHeader(
         "Set-Cookie",

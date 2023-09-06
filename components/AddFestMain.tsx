@@ -54,7 +54,6 @@ const AddFestMain: FC<{ token: string }> = ({ token }) => {
       toast.error("Something went wrong");
     } else {
       const fest = await res.json();
-      console.log(fest);
       router.push(`/fests/${fest.slug}`);
     }
   };

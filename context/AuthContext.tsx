@@ -88,8 +88,6 @@ export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
     const res = await fetch(`${NEXT_URL}/api/user`);
     const data = await res.json();
 
-    console.log(data);
-
     if (res.ok) {
       setUser(data.user);
     } else {

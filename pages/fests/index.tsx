@@ -6,7 +6,6 @@ import { GetServerSideProps } from "next";
 import { FC } from "react";
 
 const EventsPage: FC<{ fests: Fest[]; meta: Meta }> = ({ fests, meta }) => {
-  console.log(fests);
   return (
     <Layout title="Events list">
       <FestsListMain fests={fests} meta={meta} />

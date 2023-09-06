@@ -5,6 +5,7 @@ import Image from "next/image";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import styles from "./FestDetailsMain.module.scss";
+import EventMap from "./EventMap";
 
 const FestDetailsMain: FC<{ fest: Fest }> = ({ fest }) => {
   const {
@@ -53,6 +54,8 @@ const FestDetailsMain: FC<{ fest: Fest }> = ({ fest }) => {
       <p>{description}</p>
       <h3>Venue: {venue}</h3>
       <p>{address}</p>
+
+      <EventMap address={address} />
 
       <Link href="/fests" className={styles.back}>
         {"<"} Go Back
