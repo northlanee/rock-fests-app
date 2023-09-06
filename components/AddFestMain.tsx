@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FC, FormEvent, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { ToastContainer, toast } from "react-toastify";
@@ -16,7 +16,7 @@ interface ValuesState {
   description: string;
 }
 
-const AddFestMain = () => {
+const AddFestMain: FC<{ token: string }> = ({ token }) => {
   const [values, setValues] = useState<ValuesState>({
     name: "",
     performers: "",
@@ -40,15 +40,22 @@ const AddFestMain = () => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({ data: values }),
     });
 
     if (!res.ok) {
+      if (res.status === 401 || res.status === 403) {
+        toast.error("No token included");
+        return;
+      }
+
       toast.error("Something went wrong");
     } else {
       const fest = await res.json();
-      router.push(`/fests/${fest.data.attributes.slug}`);
+      console.log(fest);
+      router.push(`/fests/${fest.slug}`);
     }
   };
 

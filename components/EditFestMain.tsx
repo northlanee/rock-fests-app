@@ -22,7 +22,7 @@ interface ValuesState {
   description: string;
 }
 
-const EditFestMain: FC<{ fest: Fest }> = ({ fest }) => {
+const EditFestMain: FC<{ fest: Fest; token: string }> = ({ fest, token }) => {
   const { name, performers, venue, address, date, time, description } =
     fest.attributes;
 
@@ -57,11 +57,17 @@ const EditFestMain: FC<{ fest: Fest }> = ({ fest }) => {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({ data: values }),
     });
 
     if (!res.ok) {
+      if (res.status === 401 || res.status === 403) {
+        toast.error("No token included");
+        return;
+      }
+
       toast.error("Something went wrong");
     } else {
       const fest = await res.json();
@@ -188,7 +194,11 @@ const EditFestMain: FC<{ fest: Fest }> = ({ fest }) => {
         onClose={() => setShowModal(false)}
         title="Image upload"
       >
-        <ImageUpload festId={fest.id} imageUploaded={imageUploaded} />
+        <ImageUpload
+          festId={fest.id}
+          imageUploaded={imageUploaded}
+          token={token}
+        />
       </Modal>
     </div>
   );

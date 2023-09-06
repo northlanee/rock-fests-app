@@ -5,9 +5,10 @@ import { API_URL } from "@/config";
 interface IImageUpload {
   imageUploaded: () => void;
   festId: number;
+  token: string;
 }
 
-const ImageUpload: FC<IImageUpload> = ({ festId, imageUploaded }) => {
+const ImageUpload: FC<IImageUpload> = ({ festId, imageUploaded, token }) => {
   const [image, setImage] = useState<File | null>(null);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -22,6 +23,9 @@ const ImageUpload: FC<IImageUpload> = ({ festId, imageUploaded }) => {
       const res = await fetch(`${API_URL}/api/upload`, {
         method: "POST",
         body: formData,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
 
       if (res.ok) {
