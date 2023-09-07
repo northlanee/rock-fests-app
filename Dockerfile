@@ -1,4 +1,8 @@
 FROM node:18-alpine AS deps
+
+ARG RAILWAY_ENVIRONMENT
+ENV RAILWAY_ENVIRONMENT=$RAILWAY_ENVIRONMENT
+
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
