@@ -14,19 +14,19 @@ const FestDetailsPage: FC<{ fest?: Fest }> = ({ fest }) => {
 
 export default FestDetailsPage;
 
-export const getStaticPaths: GetStaticPaths = async () => {
-  const res = await fetch(`${API_URL}/api/fests`);
-  const fests = (await res.json()) as { data: Fest[] };
+// export const getStaticPaths: GetStaticPaths = async () => {
+//   const res = await fetch(`${API_URL}/api/fests`);
+//   const fests = (await res.json()) as { data: Fest[] };
 
-  const paths = fests.data.map((e) => ({
-    params: { slug: e.attributes.slug },
-  }));
+//   const paths = fests.data.map((e) => ({
+//     params: { slug: e.attributes.slug },
+//   }));
 
-  return {
-    paths,
-    fallback: true,
-  };
-};
+//   return {
+//     paths,
+//     fallback: true,
+//   };
+// };
 
 interface Params extends ParsedUrlQuery {
   slug: string;
