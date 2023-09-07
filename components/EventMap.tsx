@@ -4,7 +4,7 @@ import { FC, useEffect, useRef, useState } from "react";
 import Geocode from "react-geocode";
 
 mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_API_TOKEN || "";
-Geocode.setApiKey(process.env.NEXT_PUPLIC_GOOGLE_MAP_API_KEY || "");
+Geocode.setApiKey(process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY || "");
 
 const EventMap: FC<{ address: string }> = ({ address }) => {
   const mapContainer = useRef<HTMLDivElement>(null);
