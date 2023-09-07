@@ -3,8 +3,13 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import { FC, useEffect, useRef, useState } from "react";
 import Geocode from "react-geocode";
 
-mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_API_TOKEN || "";
-Geocode.setApiKey(process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY || "");
+mapboxgl.accessToken =
+  process.env.NEXT_PUBLIC_MAPBOX_API_TOKEN ||
+  "pk.eyJ1IjoiYWxleC15b2thaSIsImEiOiJjbG03cG1wcmkwNGtqM2RyN3E0ZDFxODRmIn0.MlrXQDrX6EvZwGmPcwRBig";
+Geocode.setApiKey(
+  process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY ||
+    "AIzaSyBzJ-pwOMryaFEzJSNFgZvCURjqU0mGdII"
+);
 
 const EventMap: FC<{ address: string }> = ({ address }) => {
   const mapContainer = useRef<HTMLDivElement>(null);
