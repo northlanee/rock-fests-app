@@ -32,7 +32,7 @@ interface Params extends ParsedUrlQuery {
   slug: string;
 }
 
-export const getStaticProps: GetStaticProps = async (context) => {
+export const getServerSideProps: GetStaticProps = async (context) => {
   const { slug } = context.params as Params;
 
   const res = await fetch(
@@ -49,7 +49,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
   return {
     props: {
       fest: fests.data[0],
-      revalidate: 60,
+      // revalidate: 60,
     },
   };
 };
